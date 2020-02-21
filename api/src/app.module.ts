@@ -5,6 +5,7 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './shared/middlewares/logger.middleware';
+import { AuthenticationMiddleware } from './shared/middlewares/authentication.middleware';
 
 @Module({
   imports: [AuthenticationModule, TodoModule],
@@ -14,5 +15,6 @@ import { LoggerMiddleware } from './shared/middlewares/logger.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
+    consumer.apply(AuthenticationMiddleware).forRoutes('/api/todos');
   }
 }

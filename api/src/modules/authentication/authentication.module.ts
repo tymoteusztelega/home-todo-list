@@ -7,5 +7,6 @@ import { FirebaseModule } from '../../shared/modules/firebase.module';
   imports: [FirebaseModule],
   controllers: [AuthenticationController],
   providers: [AuthenticationService],
+  exports: [AuthenticationService],
 })
 export class AuthenticationModule {}
