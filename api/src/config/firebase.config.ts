@@ -1,10 +1,23 @@
+import config from './env.config';
+
+const {
+  API_KEY,
+  AUTH_DOMAIN,
+  DB_URL,
+  PROJECT_ID,
+  BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID,
+} = config;
+
 export default {
-  apiKey: 'AIzaSyAjsbVHbfvBVqIhkJ0qfo9Av3s4q3-rX1M',
-  authDomain: 'home-todo-list.firebaseapp.com',
-  databaseURL: 'https://home-todo-list.firebaseio.com',
-  projectId: 'home-todo-list',
-  storageBucket: 'home-todo-list.appspot.com',
-  messagingSenderId: '8334284396',
-  appId: '1:8334284396:web:38c7bd846ccd4ad9272a49',
-  measurementId: 'G-9VWFT9EM0Z',
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DB_URL,
+  projectId: PROJECT_ID,
+  storageBucket: BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 };
