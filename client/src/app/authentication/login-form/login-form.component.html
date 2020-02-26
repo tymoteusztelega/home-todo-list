@@ -1,1 +1,41 @@
-<p>login-form works!</p>
+<div class="container">
+  <mat-card class="login-card">
+    <mat-card-title>Log in to your account</mat-card-title>
+    <form
+      class="login-form"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit(loginForm.value)"
+      (capsLock)="capsOn = $event"
+    >
+      <mat-form-field class="login-form__input">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="xzy@mail.com" formControlName="email" />
+        <mat-error *ngIf="hasError('email', 'required')"> Email is required </mat-error>
+        <mat-error *ngIf="hasError('email', 'email')"> Insert correct email </mat-error>
+      </mat-form-field>
+      <mat-form-field class="login-form__input">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Insert your password..."
+          type="password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="hasError('password', 'required')"> Password is required </mat-error>
+        <mat-error *ngIf="hasError('password', 'minlength')">
+          Password should contain at least 6 characters
+        </mat-error>
+      </mat-form-field>
+      <div class="button-centered">
+        <button [disabled]="loginForm.status === 'INVALID'" mat-raised-button color="primary">
+          LOGIN
+        </button>
+      </div>
+      <p class="sign-in">
+        Or <a routerLink="/auth/signin"> sing in </a> if you do not have account
+      </p>
+
+      <mat-error *ngIf="capsOn">CAPSLOCK IS LOCKED</mat-error>
+    </form>
+  </mat-card>
+</div>

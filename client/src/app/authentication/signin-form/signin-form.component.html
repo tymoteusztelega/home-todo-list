@@ -1,1 +1,28 @@
-<p>signin-form works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title>Create new account</mat-card-title>
+    <form class="sign-in-form" [formGroup]="signInForm" (ngSubmit)="onSubmit(signInForm.value)">
+      <mat-form-field class="sign-in-form__input">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="xzy@mail.com" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="sign-in-form__input">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Instert your username" formControlName="username" />
+      </mat-form-field>
+      <mat-form-field class="sign-in-form__input">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Insert your password..."
+          type="password"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <div class="button-centered">
+        <button [disabled]="signInForm.hasError()" mat-raised-button color="primary">LOGIN</button>
+      </div>
+      <p class="log-in">Or <a routerLink="/auth/login"> login </a> if you have account</p>
+    </form>
+  </mat-card>
+</div>

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@nestjs/common';
-
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+
 import firebaseConfig from '../../config/firebase.config';
 
 const APP_NAME = 'HOME_TODO_LIST';

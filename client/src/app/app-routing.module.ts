@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthenticationGuardService } from './authentication/authentication-guard.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/auth', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () =>
@@ -11,7 +11,10 @@ const routes: Routes = [
   {
     path: 'todos',
     loadChildren: () => import('./todos/todos.module').then(m => m.TodosModule),
+    canActivate: [AuthenticationGuardService],
   },
+  { path: '', redirectTo: '/todos', pathMatch: 'full' },
+  { path: '**', redirectTo: '/todos', pathMatch: 'full' },
 ];
 
 @NgModule({

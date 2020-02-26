@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html,
 body {
   font-family: Roboto;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-image: url('./assets/images/todo-list-background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left bottom;
 }
