@@ -17,7 +17,7 @@ export class TodoService {
 
   async getTodos(): Promise<ITodo[]> {
     const todoSnapshot = await this._todoRef.once('value');
-    const todosAsArray: ITodo[] = Object.entries(todoSnapshot.val()).map(
+    const todosAsArray: ITodo[] = Object.entries(todoSnapshot.val() || {}).map(
       ([id, todo]: [string, ITodo]) => ({
         ...todo,
         id,
@@ -26,7 +26,7 @@ export class TodoService {
     return todosAsArray;
   }
 
-  createTodo(todo: Partial<ITodo>): firebase.database.ThenableReference {
+  createTodo(todo: Partial<ITodo>): ITodo {
     const user = this.authenticationService.getCurrentUser();
 
     const {
@@ -40,8 +40,17 @@ export class TodoService {
       creationDate: moment().format(),
       createdBy: data.displayName || email,
     } as ITodo;
-    Logger.log(newTodo);
-    return this._todoRef.push(newTodo);
+
+    const ref = this._todoRef.push(newTodo);
+    const [id] = ref
+      .toString()
+      .split('/')
+      .reverse();
+
+    return {
+      ...newTodo,
+      id,
+    };
   }
 
   updateTodo(id: string, todo: Partial<ITodo>): Promise<void> {

@@ -12,7 +12,7 @@ export class TodoController {
   }
 
   @Post('/')
-  addTodo(@Body() todo: Partial<ITodo>): firebase.database.ThenableReference {
+  addTodo(@Body() todo: Partial<ITodo>): ITodo {
     return this.todoService.createTodo(todo);
   }
 
