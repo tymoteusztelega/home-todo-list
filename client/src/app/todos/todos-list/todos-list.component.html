@@ -1,1 +1,45 @@
-<p>todos-list works!</p>
+<div class="container">
+  <div class="create-todo">
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea maxlength="200" matInput [(ngModel)]="todoDescription"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="createTodo()">Create Todo</button>
+  </div>
+
+  <div class="manage-todo">
+    <div class="example-container">
+      <h2>Todo</h2>
+
+      <div
+        cdkDropList
+        class="example-list"
+        #todoList="cdkDropList"
+        [cdkDropListData]="todo"
+        [cdkDropListConnectedTo]="[doneList]"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" [cdkDragData]="item" *ngFor="let item of todo" cdkDrag>
+          {{ item.description }}
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>Done</h2>
+
+      <div
+        cdkDropList
+        class="example-list"
+        #doneList="cdkDropList"
+        [cdkDropListData]="done"
+        [cdkDropListConnectedTo]="[todoList]"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="example-box" [cdkDragData]="item" *ngFor="let item of done" cdkDrag>
+          {{ item.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
