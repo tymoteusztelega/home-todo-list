@@ -1,12 +1,7 @@
 <div class="container">
   <mat-card class="login-card">
     <mat-card-title>Log in to your account</mat-card-title>
-    <form
-      class="login-form"
-      [formGroup]="loginForm"
-      (ngSubmit)="onSubmit(loginForm.value)"
-      (capsLock)="capsOn = $event"
-    >
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
       <mat-form-field class="login-form__input">
         <mat-label>Email</mat-label>
         <input matInput placeholder="xzy@mail.com" formControlName="email" />
@@ -34,8 +29,6 @@
       <p class="sign-in">
         Or <a routerLink="/auth/signin"> sing in </a> if you do not have account
       </p>
-
-      <mat-error *ngIf="capsOn">CAPSLOCK IS LOCKED</mat-error>
     </form>
   </mat-card>
 </div>
