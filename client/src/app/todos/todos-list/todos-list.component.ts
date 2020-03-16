@@ -54,7 +54,7 @@ export class TodosListComponent implements OnInit {
       this.todosService
         .updateTodo({ ...todo, isDone: !todo.isDone })
         .pipe(
-          tap(todo => console.log(todo)),
+          tap(updatedTodo => console.log(updatedTodo)),
           take(1),
         )
         .subscribe();
