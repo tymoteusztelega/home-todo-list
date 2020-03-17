@@ -14,10 +14,7 @@ export class AuthenticationGuardService implements CanActivate {
   public canActivate(): Observable<boolean> {
     return this.authenticationService.getUser().pipe(
       tap(user => {
-        console.log('User -> ', user);
-        if (!user) {
-          this.router.navigate(['/auth']);
-        }
+        if (!user) this.router.navigate(['/auth']);
       }),
       map(user => Boolean(user)),
     );

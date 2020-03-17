@@ -13,10 +13,10 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
   declarations: [LoginFormComponent, SigninFormComponent],
   imports: [
     CommonModule,
-    AuthenticationRoutingModule,
-    HttpClientModule,
     MaterialModule,
+    HttpClientModule,
     ReactiveFormsModule,
+    AuthenticationRoutingModule,
   ],
   providers: [AuthenticationService],
 })
