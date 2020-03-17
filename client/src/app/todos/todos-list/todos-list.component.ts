@@ -2,8 +2,10 @@ import { tap, take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-import ITodo from '../todo.interface';
-import { TodosService } from '../todos.service';
+import ITodo from '../../shared/interfaces/ITodo.interface';
+import { TodosFacade } from '../+state/todos.facade';
+import { TodosService } from '../+state/todos.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todos-list',
@@ -11,25 +13,30 @@ import { TodosService } from '../todos.service';
   styleUrls: ['./todos-list.component.scss'],
 })
 export class TodosListComponent implements OnInit {
-  public todos: ITodo[];
   public todo: ITodo[];
   public done: ITodo[];
-
   public todoDescription: string;
 
-  constructor(private readonly todosService: TodosService) {}
+  private _subscriptionHandler = new Subscription();
+
+  constructor(
+    private readonly todosFacade: TodosFacade,
+    private readonly todosService: TodosService,
+  ) {}
 
   ngOnInit() {
-    this.todosService
-      .getTodos()
-      .pipe(
-        tap(todos => {
-          this.todo = todos.filter(t => !t.isDone);
-          this.done = todos.filter(t => t.isDone);
-        }),
-        take(1),
-      )
-      .subscribe();
+    this.todosFacade.fetchTodos();
+
+    this._subscriptionHandler.add(
+      this.todosFacade.todos$
+        .pipe(
+          tap(todos => {
+            this.todo = todos.filter(t => !t.isDone);
+            this.done = todos.filter(t => t.isDone);
+          }),
+        )
+        .subscribe(),
+    );
   }
 
   public drop(event: CdkDragDrop<string[]>) {
@@ -46,8 +53,10 @@ export class TodosListComponent implements OnInit {
     const { container, previousContainer, previousIndex, currentIndex, item } = event;
     const isTheSameContainer = previousContainer === container;
 
-    if (isTheSameContainer) moveItemInArray(container.data, previousIndex, currentIndex);
-    else {
+    if (isTheSameContainer) {
+      moveItemInArray(container.data, previousIndex, currentIndex);
+      this.todosFacade.setTodos([...this.todo, ...this.done]);
+    } else {
       transferArrayItem(previousContainer.data, container.data, previousIndex, currentIndex);
 
       const todo: ITodo = item.data;
@@ -82,13 +91,7 @@ export class TodosListComponent implements OnInit {
   public createTodo() {
     if (!this.todoDescription) return;
 
-    this.todosService
-      .createTodo({ description: this.todoDescription })
-      .pipe(
-        tap(() => (this.todoDescription = '')),
-        tap(newTodo => this.todo.push(newTodo)),
-        take(1),
-      )
-      .subscribe();
+    this.todosFacade.createTodo({ description: this.todoDescription });
+    this.todoDescription = '';
   }
 }

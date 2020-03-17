@@ -17,9 +17,6 @@ export class SigninFormComponent implements OnInit {
       username: new FormControl('', [Validators.maxLength(16)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
-
-    this.signInForm.statusChanges.subscribe(status => console.log('Status', status));
-    this.signInForm.valueChanges.subscribe(status => console.log('Value', status));
   }
 
   public onSubmit(event) {
